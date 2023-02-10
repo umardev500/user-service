@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+import "pb/response.proto";
+
 option go_package = "./pb";
 
 message UserLocation {
@@ -45,7 +47,14 @@ message UserFindRequest {
     string user_id = 1;
 }
 
+message UserUpdateCredsRequest {
+    string user_id = 1;
+    string user = 2;
+    string pass = 3;
+}
+
 service UserService {
     rpc Login(UserLoginRequest) returns (UserLoginResponse) {}
     rpc Find(UserFindRequest) returns (User) {}
+    rpc UpdateCreds(UserUpdateCredsRequest) returns (OperationResponse) {}
 }

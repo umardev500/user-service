@@ -43,9 +43,11 @@ type User struct {
 type UserRepository interface {
 	Login(ctx context.Context, req *pb.UserLoginRequest) (res LoginResponsePayload, err error)
 	Find(ctx context.Context, req *pb.UserFindRequest) (res *pb.User, err error)
+	UpdateCreds(ctx context.Context, req *pb.UserUpdateCredsRequest, updatedTime int64) (res *pb.OperationResponse, err error)
 }
 
 type UserUsecase interface {
 	Login(ctx context.Context, req *pb.UserLoginRequest) (res LoginResponsePayload, err error)
 	Find(ctx context.Context, req *pb.UserFindRequest) (res *pb.User, err error)
+	UpdateCreds(ctx context.Context, req *pb.UserUpdateCredsRequest) (res *pb.OperationResponse, err error)
 }

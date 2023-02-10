@@ -4,6 +4,7 @@ import (
 	"context"
 	"customer/domain"
 	"customer/pb"
+	"time"
 )
 
 type UserUsecase struct {
@@ -14,6 +15,12 @@ func NewUserUsecase(repository domain.UserRepository) domain.UserUsecase {
 	return &UserUsecase{
 		repository: repository,
 	}
+}
+
+func (u *UserUsecase) UpdateCreds(ctx context.Context, req *pb.UserUpdateCredsRequest) (res *pb.OperationResponse, err error) {
+	updatedTime := time.Now().UTC().Unix()
+	res, err = u.repository.UpdateCreds(ctx, req, updatedTime)
+	return
 }
 
 func (u *UserUsecase) Find(ctx context.Context, req *pb.UserFindRequest) (res *pb.User, err error) {

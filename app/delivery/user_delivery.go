@@ -19,12 +19,13 @@ func NewUserDelivery(usecase domain.UserUsecase) *UserDelivery {
 	}
 }
 
+func (u *UserDelivery) UpdateCreds(ctx context.Context, req *pb.UserUpdateCredsRequest) (res *pb.OperationResponse, err error) {
+	res, err = u.usecase.UpdateCreds(ctx, req)
+	return
+}
+
 func (u *UserDelivery) Find(ctx context.Context, req *pb.UserFindRequest) (res *pb.User, err error) {
 	res, err = u.usecase.Find(ctx, req)
-	if err == mongo.ErrNoDocuments {
-		return
-	}
-
 	return
 }
 

@@ -20,6 +20,27 @@ func NewUserRepository(user *mongo.Collection) domain.UserRepository {
 	}
 }
 
+func (u *UserRespitory) UpdateCreds(ctx context.Context, req *pb.UserUpdateCredsRequest, updatedTime int64) (res *pb.OperationResponse, err error) {
+	var affected bool = false
+	userId := req.UserId
+	filter := bson.M{"user_id": userId}
+	payload := bson.M{"user": req.User, "pass": req.Pass, "updated_at": updatedTime}
+	set := bson.M{"$set": payload}
+
+	resp, err := u.user.UpdateOne(ctx, filter, set)
+	if err != nil {
+		return
+	}
+
+	if resp.ModifiedCount > 0 {
+		affected = true
+	}
+
+	res = &pb.OperationResponse{IsAffected: affected}
+
+	return
+}
+
 func (u *UserRespitory) Find(ctx context.Context, req *pb.UserFindRequest) (res *pb.User, err error) {
 	var result domain.User
 
