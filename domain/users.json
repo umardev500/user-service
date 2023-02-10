@@ -1,0 +1,23 @@
+[
+    {
+        "user_id": "16678292763",
+        "user": "username",
+        "pass": "password",
+        "detail": {
+            "name": "Jhon Steel",
+            "email": "jhon@mail.com",
+            "phone": "+62 83879154310",
+            "location": {
+                "address": "Jl. Raya Labuan Km.12 Rengat",
+                "village": "Menes",
+                "district": "Menes",
+                "city": "Pandeglang",
+                "province": "Banten",
+                "postal_code": "42262"
+            }
+        },
+        "level": "super_admin",
+        "status": "active",
+        "created_at": 166782727649
+    }
+]
