@@ -44,13 +44,15 @@ func (u *UserDelivery) Login(ctx context.Context, req *pb.UserLoginRequest) (res
 	result, err := u.usecase.Login(ctx, req)
 
 	if err == mongo.ErrNoDocuments {
-		return &pb.UserLoginResponse{}, nil
+		return &pb.UserLoginResponse{IsEmpty: true}, nil
 	}
 
 	res = &pb.UserLoginResponse{
-		UserId: result.UserId,
-		User:   result.User,
-		Level:  result.Level,
+		Payload: &pb.UserLoginResponsePayload{
+			UserId: result.UserId,
+			User:   result.User,
+			Level:  result.Level,
+		},
 	}
 
 	return

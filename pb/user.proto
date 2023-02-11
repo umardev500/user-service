@@ -37,10 +37,15 @@ message UserLoginRequest {
     string pass = 2;
 }
 
-message UserLoginResponse {
+message UserLoginResponsePayload {
     string user_id = 1;
     string user = 2;
     string level = 3;
+}
+
+message UserLoginResponse {
+    bool is_empty = 1;
+    UserLoginResponsePayload payload = 2;
 }
 
 message UserFindRequest {
