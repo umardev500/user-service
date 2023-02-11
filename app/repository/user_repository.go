@@ -4,7 +4,6 @@ import (
 	"context"
 	"customer/domain"
 	"customer/pb"
-	"fmt"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -91,9 +90,6 @@ func (u *UserRespitory) Login(ctx context.Context, req *pb.UserLoginRequest) (re
 
 	filter := bson.M{"user": user, "pass": pass}
 	err = u.user.FindOne(ctx, filter).Decode(&result)
-	if err == mongo.ErrNoDocuments {
-		fmt.Println(err)
-	}
 
 	return
 }
