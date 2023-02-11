@@ -47,6 +47,11 @@ message UserFindRequest {
     string user_id = 1;
 }
 
+message UserFindResponse {
+    bool is_empty = 1;
+    User payload = 2;
+}
+
 message UserUpdateCredsRequest {
     string user_id = 1;
     string user = 2;
@@ -55,6 +60,6 @@ message UserUpdateCredsRequest {
 
 service UserService {
     rpc Login(UserLoginRequest) returns (UserLoginResponse) {}
-    rpc Find(UserFindRequest) returns (User) {}
+    rpc Find(UserFindRequest) returns (UserFindResponse) {}
     rpc UpdateCreds(UserUpdateCredsRequest) returns (OperationResponse) {}
 }

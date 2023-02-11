@@ -24,8 +24,19 @@ func (u *UserDelivery) UpdateCreds(ctx context.Context, req *pb.UserUpdateCredsR
 	return
 }
 
-func (u *UserDelivery) Find(ctx context.Context, req *pb.UserFindRequest) (res *pb.User, err error) {
-	res, err = u.usecase.Find(ctx, req)
+func (u *UserDelivery) Find(ctx context.Context, req *pb.UserFindRequest) (res *pb.UserFindResponse, err error) {
+	result, err := u.usecase.Find(ctx, req)
+	if err == mongo.ErrNoDocuments {
+		res = &pb.UserFindResponse{IsEmpty: true}
+		err = nil
+
+		return
+	}
+
+	res = &pb.UserFindResponse{
+		Payload: result,
+	}
+
 	return
 }
 

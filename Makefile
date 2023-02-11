@@ -14,7 +14,7 @@ login:
 	grpcurl --plaintext -d '{"user": "username", "pass": "password"}' localhost:5013 UserService.Login
 
 find:
-	grpcurl --plaintext -d '{"user_id": "16678292763"}' localhost:5013 UserService.Find
+	grpcurl --plaintext -d '{"user_id": "16678292763s"}' localhost:5013 UserService.Find
 
 update:
 	grpcurl --plaintext -d '{"user_id": "16678292763", "user": "umardev500", "pass": "umardev500pass"}' localhost:5013 UserService.UpdateCreds

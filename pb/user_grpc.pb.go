@@ -23,7 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UserServiceClient interface {
 	Login(ctx context.Context, in *UserLoginRequest, opts ...grpc.CallOption) (*UserLoginResponse, error)
-	Find(ctx context.Context, in *UserFindRequest, opts ...grpc.CallOption) (*User, error)
+	Find(ctx context.Context, in *UserFindRequest, opts ...grpc.CallOption) (*UserFindResponse, error)
 	UpdateCreds(ctx context.Context, in *UserUpdateCredsRequest, opts ...grpc.CallOption) (*OperationResponse, error)
 }
 
@@ -44,8 +44,8 @@ func (c *userServiceClient) Login(ctx context.Context, in *UserLoginRequest, opt
 	return out, nil
 }
 
-func (c *userServiceClient) Find(ctx context.Context, in *UserFindRequest, opts ...grpc.CallOption) (*User, error) {
-	out := new(User)
+func (c *userServiceClient) Find(ctx context.Context, in *UserFindRequest, opts ...grpc.CallOption) (*UserFindResponse, error) {
+	out := new(UserFindResponse)
 	err := c.cc.Invoke(ctx, "/UserService/Find", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -67,7 +67,7 @@ func (c *userServiceClient) UpdateCreds(ctx context.Context, in *UserUpdateCreds
 // for forward compatibility
 type UserServiceServer interface {
 	Login(context.Context, *UserLoginRequest) (*UserLoginResponse, error)
-	Find(context.Context, *UserFindRequest) (*User, error)
+	Find(context.Context, *UserFindRequest) (*UserFindResponse, error)
 	UpdateCreds(context.Context, *UserUpdateCredsRequest) (*OperationResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
@@ -79,7 +79,7 @@ type UnimplementedUserServiceServer struct {
 func (UnimplementedUserServiceServer) Login(context.Context, *UserLoginRequest) (*UserLoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
-func (UnimplementedUserServiceServer) Find(context.Context, *UserFindRequest) (*User, error) {
+func (UnimplementedUserServiceServer) Find(context.Context, *UserFindRequest) (*UserFindResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Find not implemented")
 }
 func (UnimplementedUserServiceServer) UpdateCreds(context.Context, *UserUpdateCredsRequest) (*OperationResponse, error) {
