@@ -63,8 +63,14 @@ message UserUpdateCredsRequest {
     string pass = 3;
 }
 
+message UserUpdateDetailRequest {
+    UserDetail detail = 1;
+    string user_id = 2;
+}
+
 service UserService {
     rpc Login(UserLoginRequest) returns (UserLoginResponse) {}
     rpc Find(UserFindRequest) returns (UserFindResponse) {}
     rpc UpdateCreds(UserUpdateCredsRequest) returns (OperationResponse) {}
+    rpc UpdateDetail(UserUpdateDetailRequest) returns (OperationResponse) {}
 }

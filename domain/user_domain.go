@@ -44,6 +44,7 @@ type UserRepository interface {
 	Login(ctx context.Context, req *pb.UserLoginRequest) (res LoginResponsePayload, err error)
 	Find(ctx context.Context, req *pb.UserFindRequest) (res *pb.User, err error)
 	UpdateCreds(ctx context.Context, req *pb.UserUpdateCredsRequest, updatedTime int64) (res *pb.OperationResponse, err error)
+	UpdateDetail(ctx context.Context, req *pb.UserUpdateDetailRequest) (res *pb.OperationResponse, err error)
 }
 
 type UserUsecase interface {

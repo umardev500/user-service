@@ -25,6 +25,7 @@ type UserServiceClient interface {
 	Login(ctx context.Context, in *UserLoginRequest, opts ...grpc.CallOption) (*UserLoginResponse, error)
 	Find(ctx context.Context, in *UserFindRequest, opts ...grpc.CallOption) (*UserFindResponse, error)
 	UpdateCreds(ctx context.Context, in *UserUpdateCredsRequest, opts ...grpc.CallOption) (*OperationResponse, error)
+	UpdateDetail(ctx context.Context, in *UserUpdateDetailRequest, opts ...grpc.CallOption) (*OperationResponse, error)
 }
 
 type userServiceClient struct {
@@ -62,6 +63,15 @@ func (c *userServiceClient) UpdateCreds(ctx context.Context, in *UserUpdateCreds
 	return out, nil
 }
 
+func (c *userServiceClient) UpdateDetail(ctx context.Context, in *UserUpdateDetailRequest, opts ...grpc.CallOption) (*OperationResponse, error) {
+	out := new(OperationResponse)
+	err := c.cc.Invoke(ctx, "/UserService/UpdateDetail", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility
@@ -69,6 +79,7 @@ type UserServiceServer interface {
 	Login(context.Context, *UserLoginRequest) (*UserLoginResponse, error)
 	Find(context.Context, *UserFindRequest) (*UserFindResponse, error)
 	UpdateCreds(context.Context, *UserUpdateCredsRequest) (*OperationResponse, error)
+	UpdateDetail(context.Context, *UserUpdateDetailRequest) (*OperationResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -84,6 +95,9 @@ func (UnimplementedUserServiceServer) Find(context.Context, *UserFindRequest) (*
 }
 func (UnimplementedUserServiceServer) UpdateCreds(context.Context, *UserUpdateCredsRequest) (*OperationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCreds not implemented")
+}
+func (UnimplementedUserServiceServer) UpdateDetail(context.Context, *UserUpdateDetailRequest) (*OperationResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateDetail not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 
@@ -152,6 +166,24 @@ func _UserService_UpdateCreds_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_UpdateDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UserUpdateDetailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).UpdateDetail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/UserService/UpdateDetail",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).UpdateDetail(ctx, req.(*UserUpdateDetailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -170,6 +202,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateCreds",
 			Handler:    _UserService_UpdateCreds_Handler,
+		},
+		{
+			MethodName: "UpdateDetail",
+			Handler:    _UserService_UpdateDetail_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
