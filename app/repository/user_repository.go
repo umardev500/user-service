@@ -124,6 +124,7 @@ func (u *UserRespitory) Find(ctx context.Context, req *pb.UserFindRequest) (res 
 		Name:     result.Detail.Name,
 		Email:    result.Detail.Email,
 		Phone:    result.Detail.Phone,
+		Avatar:   result.Detail.Avatar,
 		Location: location,
 	}
 
