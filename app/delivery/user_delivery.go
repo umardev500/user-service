@@ -19,6 +19,10 @@ func NewUserDelivery(usecase domain.UserUsecase) *UserDelivery {
 	}
 }
 
+func (u *UserDelivery) UpdateDetail(ctx context.Context, req *pb.UserUpdateDetailRequest) (res *pb.OperationResponse, err error) {
+	return u.usecase.UpdateDetail(ctx, req)
+}
+
 func (u *UserDelivery) UpdateCreds(ctx context.Context, req *pb.UserUpdateCredsRequest) (res *pb.OperationResponse, err error) {
 	res, err = u.usecase.UpdateCreds(ctx, req)
 	return

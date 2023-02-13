@@ -4,6 +4,9 @@ import (
 	"context"
 	"customer/domain"
 	"customer/pb"
+	"customer/variable"
+	"fmt"
+	"reflect"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -42,8 +45,46 @@ func (u *UserRespitory) Update(ctx context.Context, payload bson.M, userId strin
 }
 
 func (u *UserRespitory) UpdateDetail(ctx context.Context, req *pb.UserUpdateDetailRequest) (res *pb.OperationResponse, err error) {
-	payload := bson.M{}
 	userId := req.UserId
+	detail := req.Detail
+	location := detail.Location
+	payload := bson.M{}
+
+	var locationValue []variable.KeyValueStruct
+	if location != nil {
+		locationValue = []variable.KeyValueStruct{
+			{Key: "address", Value: location.Address},
+			{Key: "village", Value: location.Village},
+			{Key: "district", Value: location.District},
+			{Key: "city", Value: location.City},
+			{Key: "province", Value: location.Province},
+			{Key: "postal_code", Value: location.PostalCode},
+		}
+	}
+
+	var fields []variable.KeyValueStruct = []variable.KeyValueStruct{
+		{Key: "detail.name", Value: detail.Name},
+		{Key: "detail.email", Value: detail.Email},
+		{Key: "detail.phone", Value: detail.Phone},
+		{Key: "detail.location", Value: locationValue},
+	}
+
+	for _, field := range fields {
+		if !reflect.ValueOf(field.Value).IsZero() {
+
+			if field.Key != "detail.location" {
+				payload[field.Key] = field.Value
+			}
+			if field.Key == "detail.location" {
+				for _, locationField := range field.Value.([]variable.KeyValueStruct) {
+					// check for zero
+					if !reflect.ValueOf(locationField.Value).IsZero() {
+						payload[fmt.Sprintf("detail.location.%s", locationField.Key)] = locationField.Value
+					}
+				}
+			}
+		}
+	}
 
 	return u.Update(ctx, payload, userId)
 }

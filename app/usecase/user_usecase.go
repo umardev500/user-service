@@ -17,6 +17,10 @@ func NewUserUsecase(repository domain.UserRepository) domain.UserUsecase {
 	}
 }
 
+func (u *UserUsecase) UpdateDetail(ctx context.Context, req *pb.UserUpdateDetailRequest) (res *pb.OperationResponse, err error) {
+	return u.repository.UpdateDetail(ctx, req)
+}
+
 func (u *UserUsecase) UpdateCreds(ctx context.Context, req *pb.UserUpdateCredsRequest) (res *pb.OperationResponse, err error) {
 	updatedTime := time.Now().UTC().Unix()
 	res, err = u.repository.UpdateCreds(ctx, req, updatedTime)
