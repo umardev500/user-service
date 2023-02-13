@@ -20,5 +20,5 @@ update:
 	grpcurl --plaintext -d '{"user_id": "16678292763", "user": "umardev500", "pass": "umardev500pass"}' localhost:5013 UserService.UpdateCreds
 
 updateDetail:
-	grpcurl --plaintext -d '{"user_id": "16678292763", "detail": {"name": "Mackenzie Shawley Sunlight", "email": "mack@gmail.com", "phone": "+62 8387915430", "location": {"address": "Kp. Cimedang","village": "Menes", "district": "Menes", "city": "Pandeglang", "province": "Banten", "postal_code": "42265"}}}' localhost:5013 UserService.UpdateDetail
+	grpcurl --plaintext -d '{"user_id": "16678292763", "detail": {"name": "Mackenzie Shawley Flash", "email": "mack@gmail.com", "phone": "+62 8387915430", "location": {"address": "Kp. Cimedang","village": "Menes", "district": "Menes", "city": "Pandeglang", "province": "Banten", "postal_code": "42265"}}}' localhost:5013 UserService.UpdateDetail
 	
