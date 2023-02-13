@@ -66,6 +66,7 @@ func (u *UserRespitory) UpdateDetail(ctx context.Context, req *pb.UserUpdateDeta
 		{Key: "detail.name", Value: detail.Name},
 		{Key: "detail.email", Value: detail.Email},
 		{Key: "detail.phone", Value: detail.Phone},
+		{Key: "detail.avatar", Value: detail.Avatar},
 		{Key: "detail.location", Value: locationValue},
 	}
 

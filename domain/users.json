@@ -5,6 +5,7 @@
         "pass": "password",
         "detail": {
             "name": "Jhon Steel",
+            "avatar": "/var/www/path_to_image",
             "email": "jhon@mail.com",
             "phone": "+62 83879154310",
             "location": {
